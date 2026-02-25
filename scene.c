@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esir <esir@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/25 16:01:50 by esir              #+#    #+#             */
+/*   Updated: 2026/02/25 16:03:19 by esir             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 static void	free_object_node(t_object *obj)
 {
 	if (!obj)
-		return;
+		return ;
 	free(obj->data);
 	free(obj);
 }
@@ -11,7 +23,7 @@ static void	free_object_node(t_object *obj)
 void	init_scene(t_scene *scene)
 {
 	if (!scene)
-		return;
+		return ;
 	scene->objects = NULL;
 	scene->lights = NULL;
 	scene->has_camera = false;
@@ -65,11 +77,11 @@ void	free_scene(t_scene *scene)
 {
 	t_object	*obj;
 	t_object	*next_obj;
-	t_light	*light;
-	t_light	*next_light;
+	t_light		*light;
+	t_light		*next_light;
 
 	if (!scene)
-		return;
+		return ;
 	obj = scene->objects;
 	while (obj)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amert <amert@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/25 16:17:44 by amert             #+#    #+#             */
+/*   Updated: 2026/02/25 16:37:45 by amert            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -7,17 +19,18 @@
 # define GNL_BUFFER_SIZE 1024
 
 // get_next_line
-char	*get_next_line(int fd);
+char		*get_next_line(int fd);
 
 // main entry
-bool	parse_file(const char *path, t_scene *scene);
+bool		parse_file(const char *path, t_scene *scene);
 
 // required by spec
-bool	validate_file_content(t_scene *scene);
-bool	parse_line_object(const char *line, t_scene *scene);
+bool		validate_file_content(t_scene *scene);
+bool		parse_line_object(const char *line, t_scene *scene);
 
 // internal helpers
 const char	*skip_spaces(const char *s);
+
 char		*trim_line(char *line);
 char		**split_ws(const char *s);
 void		free_tokens(char **tokens);

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amert <amert@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/25 16:13:37 by amert             #+#    #+#             */
+/*   Updated: 2026/02/25 18:29:56 by amert            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-static size_t	gnl_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	len;
 
@@ -12,7 +24,7 @@ static size_t	gnl_strlen(const char *s)
 	return (len);
 }
 
-static char	*gnl_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	if (!s)
 		return (NULL);
@@ -27,7 +39,7 @@ static char	*gnl_strchr(const char *s, int c)
 	return (NULL);
 }
 
-static char	*gnl_strdup(const char *s)
+char	*gnl_strdup(const char *s)
 {
 	size_t	len;
 	size_t	i;
@@ -47,7 +59,7 @@ static char	*gnl_strdup(const char *s)
 	return (dst);
 }
 
-static char	*gnl_substr(const char *s, size_t start, size_t len)
+char	*gnl_substr(const char *s, size_t start, size_t len)
 {
 	size_t	slen;
 	size_t	i;
@@ -73,7 +85,7 @@ static char	*gnl_substr(const char *s, size_t start, size_t len)
 	return (dst);
 }
 
-static char	*gnl_strjoin(const char *s1, const char *s2)
+char	*gnl_strjoin(const char *s1, const char *s2)
 {
 	size_t	l1;
 	size_t	l2;
@@ -99,38 +111,4 @@ static char	*gnl_strjoin(const char *s1, const char *s2)
 	}
 	dst[l1 + l2] = '\0';
 	return (dst);
-}
-
-char	*gnl_extract_line(char **stash)
-{
-	char	*nl;
-	char	*line;
-	char	*rest;
-
-	if (!stash || !*stash || **stash == '\0')
-		return (NULL);
-	nl = gnl_strchr(*stash, '\n');
-	if (nl)
-	{
-		line = gnl_substr(*stash, 0, (size_t)(nl - *stash + 1));
-		rest = gnl_strdup(nl + 1);
-		free(*stash);
-		*stash = rest;
-		return (line);
-	}
-	line = gnl_strdup(*stash);
-	free(*stash);
-	*stash = NULL;
-	return (line);
-}
-
-char	*gnl_stash_join(char *stash, const char *buf)
-{
-	char	*joined;
-
-	if (!stash)
-		return (gnl_strdup(buf));
-	joined = gnl_strjoin(stash, buf);
-	free(stash);
-	return (joined);
 }

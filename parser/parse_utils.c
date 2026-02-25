@@ -1,13 +1,22 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amert <amert@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/25 16:17:33 by amert             #+#    #+#             */
+/*   Updated: 2026/02/25 18:29:56 by amert            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static bool	is_space(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f');
-}
+#include "parser.h"
 
 const char	*skip_spaces(const char *s)
 {
-	while (s && *s && is_space(*s))
+	while (s && *s
+		&& (*s == ' ' || *s == '\t' || *s == '\n'
+			|| *s == '\r' || *s == '\v' || *s == '\f'))
 		s++;
 	return (s);
 }
@@ -29,50 +38,12 @@ char	*trim_line(char *line)
 	return (line);
 }
 
-static size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	if (!s)
-		return (0);
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
-
-static char	*ft_substr(const char *s, size_t start, size_t len)
-{
-	size_t	slen;
-	size_t	i;
-	char	*dst;
-
-	if (!s)
-		return (NULL);
-	slen = ft_strlen(s);
-	if (start >= slen)
-		return (NULL);
-	if (len > slen - start)
-		len = slen - start;
-	dst = (char *)malloc(len + 1);
-	if (!dst)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dst[i] = s[start + i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
 void	free_tokens(char **tokens)
 {
 	size_t	i;
 
 	if (!tokens)
-		return;
+		return ;
 	i = 0;
 	while (tokens[i])
 	{
@@ -80,53 +51,6 @@ void	free_tokens(char **tokens)
 		i++;
 	}
 	free(tokens);
-}
-
-char	**split_ws(const char *s)
-{
-	size_t	i;
-	size_t	count;
-	size_t	start;
-	char	**out;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		while (s[i] && is_space(s[i]))
-			i++;
-		if (!s[i])
-			break;
-		count++;
-		while (s[i] && !is_space(s[i]))
-			i++;
-	}
-	out = (char **)calloc(count + 1, sizeof(char *));
-	if (!out)
-		return (NULL);
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		while (s[i] && is_space(s[i]))
-			i++;
-		if (!s[i])
-			break;
-		start = i;
-		while (s[i] && !is_space(s[i]))
-			i++;
-		out[count] = ft_substr(s, start, i - start);
-		if (!out[count])
-		{
-			free_tokens(out);
-			return (NULL);
-		}
-		count++;
-	}
-	out[count] = NULL;
-	return (out);
 }
 
 bool	parse_double_str(const char *s, double *out)
