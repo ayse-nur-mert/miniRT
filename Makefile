@@ -1,59 +1,50 @@
-NAME        = miniRT
-CC          = gcc
-CFLAGS      = -Wall -Wextra -Werror -g
-MLX_DIR     = minilibx-linux
-MLX_LIB     = $(MLX_DIR)/libmlx_Linux.a
-INCLUDES    = -I include -I $(MLX_DIR)
-LIBS        = -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm
+NAME	:= miniRT
 
-SRC_DIR     = src
-OBJ_DIR     = obj
+CC		:= cc
+CFLAGS	:= -Wall -Wextra -Werror -I. -I./parser -I./minilibx-linux
 
-# Source Files
-SRC_CORE    = $(SRC_DIR)/core/main.c \
-              $(SRC_DIR)/core/utils.c \
-              $(SRC_DIR)/core/mlx_utils.c
+MLX_DIR	:= minilibx-linux
+MLX_LIB	:= $(MLX_DIR)/libmlx.a
+LDFLAGS	:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-SRC_MATH    = $(SRC_DIR)/math/vec_utils.c
+SRCS	:= \
+	main.c \
+	render_scene.c \
+	vector_intersection.c \
+	intersections.c \
+	vector_math1.c \
+	vector_math2.c \
+	vector_math3.c \
+	vector_math4.c \
+	scene.c \
+	parser/get_next_line.c \
+	parser/get_next_line_utils.c \
+	parser/parse_file.c \
+	parser/validate_file_content.c \
+	parser/parse_line_object.c \
+	parser/parse_line_light.c \
+	parser/parse_line_camera_ambient.c \
+	parser/parse_utils.c \
+	parser/parse_utils2.c
 
-SRC_PARSER  = $(SRC_DIR)/parser/tokenizer.c \
-              $(SRC_DIR)/parser/parser.c
+OBJS	:= $(SRCS:.c=.o)
 
-SRC_RENDER  = $(SRC_DIR)/render/intersection.c \
-              $(SRC_DIR)/render/shading.c \
-              $(SRC_DIR)/render/camera.c \
-              $(SRC_DIR)/render/render_scene.c
-
-SRCS        = $(SRC_CORE) $(SRC_MATH) $(SRC_PARSER) $(SRC_RENDER)
-OBJS        = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-
-# Rules
 all: $(NAME)
 
-bonus: all
 
-$(NAME): $(OBJS) $(MLX_LIB)
-	@echo "Linking $(NAME)..."
-	$(CC) $(OBJS) $(LIBS) -o $(NAME)
+
+$(NAME): $(MLX_LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 $(MLX_LIB):
-	@echo "Building MiniLibX..."
-	@make -C $(MLX_DIR)
-
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(MAKE) -C $(MLX_DIR)
 
 clean:
-	@echo "Cleaning objects..."
-	rm -rf $(OBJ_DIR)
+	rm -f $(OBJS)
+	-$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
-	@echo "Cleaning executeable..."
 	rm -f $(NAME)
-	# Also remove test binaries if any
-	rm -f test_math test_parser
 
 re: fclean all
 

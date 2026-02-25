@@ -1,0 +1,23 @@
+# Showcase Scene for miniRT - V2 (Cylinder Focus)
+# This scene is designed to clearly display the cylinder and its caps.
+
+# A <ambient_lighting_ratio> <R,G,B>
+A   0.2     255,255,255
+
+# C <x,y,z_coordinates> <3d_normalized_orientation_vector> <FOV>
+C   0,15,-50    0,-0.3,1    60
+
+# L <x,y,z_coordinates> <light_brightness> <R,G,B>
+L   -40,30,-40  0.8     255,255,255
+
+# pl (Ground Plane) <x,y,z_coordinates> <normal_vector> <R,G,B>
+pl  0,-5,0      0,1,0       50,150,50
+
+# sp (Red Sphere on the left) <x,y,z_center> <diameter> <R,G,B>
+sp  -15,0,0     15          255,0,0
+
+# cy (Blue Cylinder in the center) <x,y,z_center> <axis_vector> <diameter> <height> <R,G,B>
+cy  0,30,0     0,1,0       10          40          0,100,255
+
+# sp (Yellow Sphere on the right) <x,y,z_center> <diameter> <R,G,B>
+sp  15,0,0      12          255,255,0
