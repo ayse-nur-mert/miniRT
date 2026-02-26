@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   render_lighting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esir <esir@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amert <amert@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:57:15 by esir              #+#    #+#             */
-/*   Updated: 2026/02/25 17:13:42 by esir             ###   ########.fr       */
+/*   Updated: 2026/02/26 12:14:28 by amert            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 #define EPS 1e-4
+
+static t_vec3	vec3_zero(void)
+{
+	t_vec3	v;
+
+	v.x = 0.0;
+	v.y = 0.0;
+	v.z = 0.0;
+	return (v);
+}
 
 static bool	is_in_shadow(t_scene *scene, t_vec3 p, t_vec3 n, t_light *light)
 {
@@ -31,30 +41,41 @@ static bool	is_in_shadow(t_scene *scene, t_vec3 p, t_vec3 n, t_light *light)
 	return (t > EPS && t < dist - EPS);
 }
 
-static t_vec3	add_light_contrib(t_scene *sc, t_vec3 p, t_vec3 n, t_object *hit)
+static double	light_factor(t_scene *sc, t_vec3 p, t_vec3 n, t_light *l)
+{
+	t_vec3	dir;
+	double	dist;
+	double	diff;
+
+	if (is_in_shadow(sc, p, n, l))
+		return (0.0);
+	dir = vec_sub(l->position, p);
+	dist = vec_magnitude(dir);
+	if (dist <= EPS)
+		return (0.0);
+	diff = vec_dot_product(n, vec_divide_scalar(dir, dist));
+	if (diff <= 0.0)
+		return (0.0);
+	return (l->brightness * diff);
+}
+
+static t_vec3	add_light_contrib(t_scene *sc, t_vec3 p,
+			t_vec3 n, t_object *hit)
 {
 	t_vec3	res;
 	t_light	*l;
-	t_vec3	dir;
 	t_vec3	lc;
-	double	diff;
+	double	f;
 
-	res = (t_vec3){0, 0, 0};
+	res = vec3_zero();
 	l = sc->lights;
 	while (l)
 	{
-		if (!is_in_shadow(sc, p, n, l))
+		f = light_factor(sc, p, n, l);
+		if (f > 0.0)
 		{
-			dir = vec_sub(l->position, p);
-			if (vec_magnitude(dir) > EPS)
-			{
-				diff = vec_dot_product(n, vec_normalize(dir));
-				if (diff > 0.0)
-				{
-					lc = color_mul255(l->color, hit->color);
-					res = vec_add(res, vec_mult_scalar(lc, l->brightness * diff));
-				}
-			}
+			lc = color_mul255(l->color, hit->color);
+			res = vec_add(res, vec_mult_scalar(lc, f));
 		}
 		l = l->next;
 	}

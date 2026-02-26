@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_scene.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esir <esir@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amert <amert@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:01:47 by esir              #+#    #+#             */
-/*   Updated: 2026/02/25 17:09:32 by esir             ###   ########.fr       */
+/*   Updated: 2026/02/26 12:16:32 by amert            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ray	generate_ray(int x, int y, t_scene *sc, double fov_fact)
 	t_vec3	rht;
 
 	r.origin = sc->camera.position;
-	tmp.x = ndc_x(x) * ASPECT_RATIO * fov_fact;
+	tmp.x = ndc_x(x) * ((double)WIDTH / (double)HEIGHT) * fov_fact;
 	tmp.y = ndc_y(y) * fov_fact;
 	fwd = vec_normalize(sc->camera.orientation);
 	up = (t_vec3){0.0, 1.0, 0.0};
@@ -52,7 +52,7 @@ static int	get_pixel_color(t_scene *scene, t_ray ray)
 			n = vec_scale(n, -1.0);
 		return (pack_rgb(shade_hit(scene, hit, p, n)));
 	}
-	return (0x000000); // Background color
+	return (0x000000);
 }
 
 void	render_scene(t_data *data, t_scene *scene)

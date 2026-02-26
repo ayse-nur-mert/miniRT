@@ -26,15 +26,19 @@ SRCS    := \
     vector_math3.c \
     vector_math4.c \
     scene.c \
+    scene_cleanup.c \
     parser/get_next_line.c \
     parser/get_next_line_utils.c \
+    parser/get_next_line_utils2.c \
     parser/parse_file.c \
     parser/validate_file_content.c \
     parser/parse_line_object.c \
     parser/parse_line_light.c \
     parser/parse_line_camera_ambient.c \
     parser/parse_utils.c \
-    parser/parse_utils2.c
+    parser/parse_utils2.c \
+	parser/parse_split_ws.c \
+	parser/vec3_checks.c   
 
 OBJS    := $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

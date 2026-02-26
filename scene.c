@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esir <esir@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: amert <amert@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:01:50 by esir              #+#    #+#             */
-/*   Updated: 2026/02/25 16:03:19 by esir             ###   ########.fr       */
+/*   Updated: 2026/02/26 12:07:38 by amert            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-static void	free_object_node(t_object *obj)
-{
-	if (!obj)
-		return ;
-	free(obj->data);
-	free(obj);
-}
 
 void	init_scene(t_scene *scene)
 {
@@ -71,31 +63,4 @@ bool	scene_add_light(t_scene *scene, t_light *light)
 		tail = tail->next;
 	tail->next = light;
 	return (true);
-}
-
-void	free_scene(t_scene *scene)
-{
-	t_object	*obj;
-	t_object	*next_obj;
-	t_light		*light;
-	t_light		*next_light;
-
-	if (!scene)
-		return ;
-	obj = scene->objects;
-	while (obj)
-	{
-		next_obj = obj->next;
-		free_object_node(obj);
-		obj = next_obj;
-	}
-	scene->objects = NULL;
-	light = scene->lights;
-	while (light)
-	{
-		next_light = light->next;
-		free(light);
-		light = next_light;
-	}
-	scene->lights = NULL;
 }
