@@ -1,67 +1,95 @@
-miniRT - Basit Bir Ray Tracer
-Bu proje, C dilinde geliştirilmiş temel bir Ray Tracing (Işın İzleme) motorudur. Temel geometrik nesnelerin (küre, düzlem, silindir) bulunduğu sahneleri, ışıklandırma ve gölge hesaplamaları ile birlikte render eder.
+# 🎨 miniRT - Ray Tracing Engine
 
-Özellikler
-Geometrik Nesneler: Küre (sp), Düzlem (pl) ve Silindir (cy) desteği.
+**miniRT**, matematiksel algoritmalar kullanarak 3D sahneleri piksellere dönüştüren, C diliyle geliştirilmiş bir **Işın İzleme (Ray Tracing)** motorudur. Bu proje, temel geometrik şekilleri, ışık kırılmalarını ve gölgeleri simüle eder.
 
-Işıklandırma: Ortam ışığı (Ambient) ve noktasal ışık kaynakları (Point Light).
+---
 
-Gölge Hesaplama: Nesnelerin birbirinin üzerine düşürdüğü gerçekçi gölgeler.
+## 🚀 Özellikler
 
-Kamera: Bakış açısı, konum ve Görüş Alanı (FOV) ayarlanabilir kamera sistemi.
+* **Geometrik Primitifler:**
+* 🔵 **Küre (Sphere):** Mükemmel kesişim hesaplamaları.
+* ⬛ **Düzlem (Plane):** Sınırsız yüzey desteği.
+* 🧪 **Silindir (Cylinder):** Gövde ve kapak (caps) hesaplamaları dahil.
 
-Sahne Yapılandırması: .rt uzantılı dosyalar üzerinden kolayca sahne tanımlama.
 
-Kurulum ve Çalıştırma
-Gereksinimler
-cc derleyicisi
+* **Işıklandırma Modeli:**
+* **Ambient Light:** Sahneye genel bir parlaklık verir.
+* **Point Light:** Noktasal ışık kaynakları ve parlaklık ayarı.
+* **Shadows:** Nesnelerin birbirini engellemesiyle oluşan gerçek zamanlı gölgeler.
 
+
+* **Kamera Sistemi:**
+* Ayarlanabilir pozisyon, bakış açısı ve **FOV (Görüş Alanı)** desteği.
+
+
+
+---
+
+## 🛠️ Kurulum
+
+### Gereksinimler
+
+* X11 Kütüphanesi
+* MiniLibX
+* GCC/Clang Derleyicisi
+
+### Derleme
+
+Projeyi klonladıktan sonra ana dizinde terminali açın:
+
+```bash
 make
 
-MiniLibX ve X11 kütüphaneleri
+```
 
-Derleme
-Proje klasöründe aşağıdaki komutu çalıştırarak derleme işlemini yapabilirsiniz:
+---
 
-Bash
+## 💻 Kullanım
 
-make
-Kullanım
-Derleme sonrası oluşan miniRT dosyasını, bir sahne dosyası yolu belirterek çalıştırabilirsiniz:
+Programı çalıştırmak için hazırlanan `.rt` sahne dosyalarından birini parametre olarak vermeniz yeterlidir:
 
-Bash
-
+```bash
 ./miniRT maps/showcase.rt
-Sahne Dosyası (.rt) Formatı
-Her sahne dosyası aşağıdaki öğeleri içerebilir:
 
-Ortam Işığı (A): A [oran] [R,G,B]
+```
 
-Örn: A 0.2 255,255,255
+### Örnek Sahne Formatı (.rt)
 
-Kamera (C): C [konum] [yön_vektörü] [FOV]
+Sahneler basit metin dosyalarıyla tanımlanır:
 
-Örn: C 0,15,-50 0,-0.3,1 60
+```text
+A   0.2   255,255,255            # Ortam Işığı
+C   0,0,10   0,0,-1   70         # Kamera
+L   10,10,10   1.0   255,255,255 # Işık
+sp  0,0,0   10   255,0,0         # Küre
 
-Işık (L): L [konum] [parlaklık] [R,G,B]
+```
 
-Örn: L -40,30,-40 0.8 255,255,255
+---
 
-Küre (sp): sp [merkez] [çap] [R,G,B]
+## 📁 Dosya Yapısı
 
-Düzlem (pl): pl [nokta] [normal_vektörü] [R,G,B]
+| Klasör / Dosya | Açıklama |
+| --- | --- |
+| `main.c` | Programın başlangıcı ve ana döngü. |
+| `parser/` | `.rt` dosyalarının okunması ve doğrulanması. |
+| `vector_math/` | Vektör toplama, çıkarma ve normalize işlemleri. |
+| `intersect/` | Nesne-ışın kesişim matematiksel mantığı. |
+| `render/` | Işıklandırma, gölge ve piksel boyama işlemleri. |
 
-Silindir (cy): cy [merkez] [eksen_vektörü] [çap] [yükseklik] [R,G,B]
+---
 
-Proje Yapısı
-main.c: Programın giriş noktası ve MLX döngüsünün başlatılması.
+## 🧪 Örnek Görüntüler
 
-parser/: Sahne dosyalarının okunması ve doğrulanmasıyla ilgili işlevler.
+*Bu bölüme kendi render sonuçlarınızdan aldığınız ekran görüntülerini ekleyebilirsiniz.*
 
-render_scene.c: Görüntünün piksel piksel işlenmesi ve render edilmesi.
+| Küre ve Gölgeler | Silindir Detayı | Kompleks Sahneler |
+| --- | --- | --- |
+|  |  |  |
 
-render_lighting.c: Phong benzeri ışıklandırma ve gölge algoritmaları.
+---
 
-intersect_*.c: Işınların nesnelerle kesişim matematiksel hesaplamaları.
+## 👤 Yazar
 
-vector_math*.c: 3D vektör işlemleri için yardımcı fonksiyonlar.
+* **Ayşe (Amert)**
+* **Efe  (Esir)**
