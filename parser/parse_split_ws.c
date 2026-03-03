@@ -12,12 +12,6 @@
 
 #include "parser.h"
 
-static bool	is_space(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\r' || c == '\v' || c == '\f');
-}
-
 static size_t	word_count(const char *s)
 {
 	size_t	i;
@@ -27,12 +21,12 @@ static size_t	word_count(const char *s)
 	count = 0;
 	while (s[i])
 	{
-		while (s[i] && is_space(s[i]))
+		while (s[i] && ft_isspace(s[i]))
 			i++;
 		if (!s[i])
 			break ;
 		count++;
-		while (s[i] && !is_space(s[i]))
+		while (s[i] && !ft_isspace(s[i]))
 			i++;
 	}
 	return (count);
@@ -68,12 +62,12 @@ static bool	split_fill(char **out, const char *s)
 	idx = 0;
 	while (s[i])
 	{
-		while (s[i] && is_space(s[i]))
+		while (s[i] && ft_isspace(s[i]))
 			i++;
 		if (!s[i])
 			break ;
 		start = i;
-		while (s[i] && !is_space(s[i]))
+		while (s[i] && !ft_isspace(s[i]))
 			i++;
 		out[idx] = word_dup(s, start, i);
 		if (!out[idx])

@@ -23,6 +23,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define PI 3.14159265358979323846
+# define EPS 1e-4
 
 typedef struct s_vec3
 {

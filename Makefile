@@ -38,28 +38,30 @@ SRCS    := \
     parser/parse_utils.c \
     parser/parse_utils2.c \
 	parser/parse_split_ws.c \
-	parser/vec3_checks.c   
+	parser/vec3_checks.c \
+	parser/ft_convert.c
 
 OBJS    := $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(MLX_LIB) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@echo "miniRT compiled successfully."
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(MLX_LIB):
-	$(MAKE) -C $(MLX_DIR)
+	@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
 
 clean:
-	rm -rf $(OBJ_DIR)
-	-$(MAKE) -C $(MLX_DIR) clean
+	@rm -rf $(OBJ_DIR)
+	@-$(MAKE) -C $(MLX_DIR) clean > /dev/null 2>&1
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

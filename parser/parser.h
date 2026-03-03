@@ -18,17 +18,19 @@
 
 # define GNL_BUFFER_SIZE 1024
 
-// get_next_line
+
 char		*get_next_line(int fd);
 
-// main entry
+int			ft_isspace(int c);
+int			ft_isdigit(int c);
+double		ft_strtod(const char *s, char **endptr);
+long		ft_strtol(const char *s, char **endptr);
+
 bool		parse_file(const char *path, t_scene *scene);
 
-// required by spec
 bool		validate_file_content(t_scene *scene);
 bool		parse_line_object(const char *line, t_scene *scene);
 
-// internal helpers
 const char	*skip_spaces(const char *s);
 
 char		*trim_line(char *line);

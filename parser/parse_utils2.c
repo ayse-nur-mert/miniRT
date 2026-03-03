@@ -23,7 +23,7 @@ static bool	parse_part(const char **s, double *out)
 {
 	char	*end;
 
-	*out = strtod(*s, &end);
+	*out = ft_strtod(*s, &end);
 	if (end == *s)
 		return (false);
 	*s = skip_sep_spaces(end);

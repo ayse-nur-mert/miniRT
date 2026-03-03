@@ -12,8 +12,6 @@
 
 #include "miniRT.h"
 
-#define EPS 1e-4
-
 static t_vec3	vec3_zero(void)
 {
 	t_vec3	v;

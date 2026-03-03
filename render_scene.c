@@ -12,8 +12,6 @@
 
 #include "miniRT.h"
 
-#define EPS 1e-4
-
 t_ray	generate_ray(int x, int y, t_scene *sc, double fov_fact)
 {
 	t_ray	r;

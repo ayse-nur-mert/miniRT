@@ -14,9 +14,7 @@
 
 const char	*skip_spaces(const char *s)
 {
-	while (s && *s
-		&& (*s == ' ' || *s == '\t' || *s == '\n'
-			|| *s == '\r' || *s == '\v' || *s == '\f'))
+	while (s && *s && ft_isspace(*s))
 		s++;
 	return (s);
 }
@@ -60,7 +58,7 @@ bool	parse_double_str(const char *s, double *out)
 
 	if (!s || !out)
 		return (false);
-	v = strtod(s, &end);
+	v = ft_strtod(s, &end);
 	if (end == s)
 		return (false);
 	while (*end == ' ' || *end == '\t')
@@ -78,7 +76,7 @@ bool	parse_int_str(const char *s, int *out)
 
 	if (!s || !out)
 		return (false);
-	v = strtol(s, &end, 10);
+	v = ft_strtol(s, &end);
 	if (end == s)
 		return (false);
 	while (*end == ' ' || *end == '\t')
