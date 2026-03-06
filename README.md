@@ -79,16 +79,6 @@ sp  0,0,0   10   255,0,0         # Küre
 
 ---
 
-## 🧪 Örnek Görüntüler
-
-*Bu bölüme kendi render sonuçlarınızdan aldığınız ekran görüntülerini ekleyebilirsiniz.*
-
-| Küre ve Gölgeler | Silindir Detayı | Kompleks Sahneler |
-| --- | --- | --- |
-|  |  |  |
-
----
-
 ## 👤 Yazar
 
 * **Ayşe (Amert)**
